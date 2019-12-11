@@ -1,41 +1,48 @@
 ﻿using System.Collections.Generic;
-
 /// <summary>
-/// Extentions for tile type singletons
+/// Extension for entity types
 /// </summary>
-public partial struct Tile {
+public partial struct Entity {
 
-  /// <summary>
-  /// The class pattern for a tile type
-  /// </summary>
   public abstract class Type {
 
     /// <summary>
-    /// The id of this tile type
+    /// The unique id of this entity
     /// </summary>
-    public byte Id {
+    public int Id {
       get;
+      private set;
     }
 
     /// <summary>
-    /// For making new types
+    /// The name of this type of entity
+    /// </summary>
+    public string Name {
+      get;
+      private set;
+    }
+
+    /// <summary>
+    /// Base constructor
     /// </summary>
     /// <param name="id"></param>
-    protected Type(byte id) {
+    /// <param name="name"></param>
+    protected Type(int id, string name) {
       Id = id;
+      Name = name;
 
-      // on creation, add the singleton to the all types list.
+      // add to the singleton constants
       Types.Add(this);
     }
   }
 
   /// <summary>
-  /// Tile type singleton constants
+  /// Entity type singleton constants
   /// </summary>
   public static partial class Types {
 
     /// <summary>
-    /// All registered block types as an ordered array
+    /// All registered types as an ordered array
     /// </summary>
     public static Type[] All {
       get {
@@ -48,14 +55,14 @@ public partial struct Tile {
     /// <summary>
     /// The dictionary of type values
     /// </summary>
-    static SortedDictionary<byte, Type> all = new SortedDictionary<byte, Type>();
+    static SortedDictionary<int, Type> all = new SortedDictionary<int, Type>();
 
     /// <summary>
-    /// Get a block by it's type id
+    /// Get a type by it's id
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public static Type Get(byte id) {
+    public static Type Get(int id) {
       return all[id];
     }
 
@@ -65,7 +72,7 @@ public partial struct Tile {
     /// <param name="type"></param>
     internal static void Add(Type type) {
       if (all.ContainsKey(type.Id)) {
-        throw new System.Exception("Attempted to register a new Tile type with an existing type's Id");
+        throw new System.Exception("Attempted to register a new Entity type with an existing type's Id");
       } else {
         all.Add(type.Id, type);
       }

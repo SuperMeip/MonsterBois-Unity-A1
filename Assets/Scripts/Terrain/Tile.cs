@@ -6,7 +6,7 @@ public partial struct Tile {
   /// <summary>
   /// The height of this tile
   /// </summary>
-  public short height;
+  public byte height;
 
   /// <summary>
   /// The type of tile
@@ -18,7 +18,7 @@ public partial struct Tile {
   /// </summary>
   /// <param name="type"></param>
   /// <param name="height"></param>
-  public Tile(Type type = null, short height = 0) {
+  public Tile(Type type = null, byte height = 0) {
     this.type   = type ?? Types.Empty;
     this.height = height;
   }
