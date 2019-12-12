@@ -1,46 +1,33 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
+
 /// <summary>
-/// Extension for entity types
+/// A capturable in-game monster
 /// </summary>
-public partial class Entity {
+public partial class Spirit : Creature {
 
-  public abstract class Type {
-
-    /// <summary>
-    /// The unique id of this entity
-    /// </summary>
-    public int Id {
-      get;
-      private set;
-    }
+  /// <summary>
+  /// A species of capturable monster in the game
+  /// </summary>
+  public abstract partial class Species : Creature.Type {
 
     /// <summary>
-    /// The name of this type of entity
-    /// </summary>
-    public string Name {
-      get;
-      private set;
-    }
-
-    /// <summary>
-    /// Base constructor
+    /// Base for making a new species
     /// </summary>
     /// <param name="id"></param>
     /// <param name="name"></param>
-    protected Type(int id, string name) {
-      Id = id;
-      Name = name;
+    protected Species(int id, string name) : base(id, name) {
 
-      // add to the singleton constants
+      // add to monster singleton too
       Types.Add(this);
     }
   }
 
   /// <summary>
-  /// Entity type singleton constants
+  /// Constant for spirit species entity types
+  /// The Zoonomicon
   /// </summary>
-  public static partial class Types {
-
+  public static partial class Encyclopeidia {
     /// <summary>
     /// All registered types as an ordered array
     /// </summary>
@@ -72,7 +59,7 @@ public partial class Entity {
     /// <param name="type"></param>
     internal static void Add(Type type) {
       if (all.ContainsKey(type.Id)) {
-        throw new System.Exception("Attempted to register a new Entity type with an existing type's Id");
+        throw new System.Exception("Attempted to register a new Monster Species with an existing type's Id");
       } else {
         all.Add(type.Id, type);
       }
